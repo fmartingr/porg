@@ -3,6 +3,7 @@ from datetime import datetime
 import hashlib
 import mimetypes
 import os.path
+from typing import Text
 
 import exifread
 import mutagen
@@ -21,7 +22,7 @@ class File:
     path: str
 
     @property
-    def type(self):
+    def type(self) -> Text:
         """Retrieves the file mimetype by extension"""
         if not getattr(self, '_type', False):
             self._type, _ = mimetypes.guess_type(self.path)
@@ -30,15 +31,15 @@ class File:
         return self._type
 
     @property
-    def is_image(self):
+    def is_image(self) -> bool:
         return 'image' in self.type
 
     @property
-    def is_video(self):
+    def is_video(self) -> bool:
         return 'video' in self.type
 
     @property
-    def exif(self):
+    def exif(self) -> dict:
         """
         Retrieve EXIF data from the file and merge it with wathever mutagen finds in there for video files.
         """
@@ -49,7 +50,7 @@ class File:
         return self._exif
 
     @property
-    def datetime(self):
+    def datetime(self) -> datetime:
         """
         Retrieves original creation date for the picture trying exif data first, filename guessing and finally
         modification date. Make sure your pictures are exported unmodified so the file attributes maintain their
@@ -78,14 +79,14 @@ class File:
         # Last resort, use file creation/modification date
         stat = os.stat(self.path)
         try:
-            return stat.st_birthtime
+            return datetime.fromtimestamp(stat.st_birthtime)
         except AttributeError:
             # Linux: No easy way to get creation dates here,
             # so we'll settle for when its content was last modified.
-            return stat.st_mtime
+            return datetime.fromtimestamp(stat.st_mtime)
 
     @property
-    def checksum(self):
+    def checksum(self) -> Text:
         if not getattr(self, '_checksum', False):
             digest = hashlib.sha1()
             with open(self.path, 'rb') as handler:
