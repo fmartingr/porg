@@ -3,9 +3,9 @@ from datetime import datetime
 import hashlib
 import mimetypes
 import os.path
+import subprocess
 from typing import Text
 
-import exifread
 import mutagen
 
 
@@ -15,6 +15,15 @@ TARGET_PATH = '/Volumes/MEDIA/Pictures'
 
 # Globals
 file_list = []
+
+
+def read_exif(path):
+    output = {}
+    with subprocess.Popen(['exiftool', path], stdout=subprocess.PIPE) as proc:
+        for line in proc.stdout.readlines():
+            key, value = line.decode('utf-8').strip().split(':', maxsplit=1)
+            output[key.strip()] = value.strip()
+    return output
 
 
 @dataclass
@@ -44,7 +53,7 @@ class File:
         Retrieve EXIF data from the file and merge it with wathever mutagen finds in there for video files.
         """
         if not getattr(self, '_exif', False):
-            self._exif = exifread.process_file(open(self.path, 'rb'))
+            self._exif = read_exif(self.path)
             if self.is_video:
                 self._exif.update(mutagen.File(self.path))
         return self._exif
