@@ -86,28 +86,28 @@ class File:
                 self._exif.update(mutagen.File(self.path))
         return self._exif
 
-    @property
-    def datetime(self) -> datetime:
+    def get_datetime(self) -> datetime:
         """
         Retrieves original creation date for the picture trying exif data first, filename guessing and finally
         modification date. Make sure your pictures are exported unmodified so the file attributes maintain their
         original values for this to work.
         """
-        if self.is_image and 'png' not in self.path.lower():
+
+        CREATION_DATE_EXIF_KEYS = ('Content Create Date', 'Date/Time Original', 'Create Date', 'Date Created', )
+
+        for key in CREATION_DATE_EXIF_KEYS:
             try:
-                date, time = self.exif['EXIF DateTimeOriginal'].values.split()
-                return datetime(*(int(x) for x in date.split(':') + time.split(':')))
+                return datetime.strptime(self.exif[key], '%Y:%m:%d %H:%M:%S%z')
             except KeyError:
                 pass
+            except ValueError:
+                try:
+                    cleaned = self.exif[key].rsplit('.', maxsplit=1)
+                    return datetime.strptime(cleaned[0], '%Y:%m:%d %H:%M:%S')
+                except ValueError:
+                    pass
 
-        if self.is_video:
-            # Apple iPhone tag
-            try:
-                return datetime.strptime(self.exif.get('©day')[0], '%Y-%m-%dT%H:%M:%S%z')
-            except TypeError:
-                pass
-
-        # Tag not found, try to guess datetime from filename
+        # Tag not found, try to guess from filename
         # Format: YYYY-MM-DD HH.MM.SS.ext
         try:
             name, _ = self.filename.rsplit('.', maxsplit=1)
@@ -124,6 +124,12 @@ class File:
             # Linux: No easy way to get creation dates here,
             # so we'll settle for when its content was last modified.
             return datetime.fromtimestamp(stat.st_mtime)
+
+    @property
+    def datetime(self):
+        if not getattr(self, '_datetime', False):
+            self._datetime = self.get_datetime()
+        return self._datetime
 
     @property
     def filename(self):
