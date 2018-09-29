@@ -3,6 +3,7 @@ from datetime import datetime
 import hashlib
 import mimetypes
 import os.path
+import shutil
 import subprocess
 from typing import Text
 
@@ -156,5 +157,11 @@ def get_target_path(fileobj):
 
 if __name__ == '__main__':
     for fileobj in read_path():
-        target_path = get_target_path(fileobj)
+        try:
+            target_path = get_target_path(fileobj)
+        except Exception as exc:
+            print(f'---- Error on {fileobj.path} ----')
+            print(exc)
+        new_filename = '.'.join([fileobj.datetime.strftime('%Y-%m-%d_%H-%M-%S'), fileobj.extension])
         os.makedirs(target_path, exist_ok=True)
+        shutil.move(fileobj.path, os.path.join(target_path, new_filename))
