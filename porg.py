@@ -116,6 +116,11 @@ class File:
         except ValueError:
             pass
 
+        print(f'---- Using stat data for {self.path}')
+        for key, value in self.exif.items():
+            if 'date' in key.lower() and 'file' not in key.lower():
+                print(f' - found "{key}={value}"')
+
         # Last resort, use file creation/modification date
         stat = os.stat(self.path)
         try:
