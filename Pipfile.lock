@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b9868bf53ffede6873397a5c3e4f890178f2f8e1c2c9b2cbcb408ff086e3e04e"
+            "sha256": "bd54c41bd24201c83805113fc99fb373871fb924e3418758e62413eef8135643"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,27 +16,12 @@
         ]
     },
     "default": {
-        "exifread": {
-            "hashes": [
-                "sha256:4aa9d227db5c4cd65d87520076140a6f84e33363e08e649b87c7afec6bab60ab",
-                "sha256:79e244f2eb466709029e8806fe5e2cdd557870c3db5f68954db0ef548d9320ad"
-            ],
-            "index": "pypi",
-            "version": "==2.1.2"
-        },
         "mutagen": {
             "hashes": [
                 "sha256:2ea9c900a05fa7f5f4c5bd9fc1475d7d576532e13b2f79b694452b997ff67200"
             ],
             "index": "pypi",
             "version": "==1.41.1"
-        },
-        "pyexif": {
-            "hashes": [
-                "sha256:da2377f987fc221a91ec6d369296d1310c5e9239abe525786e380f97270ddebd"
-            ],
-            "index": "pypi",
-            "version": "==0.2.1"
         }
     },
     "develop": {
@@ -71,10 +56,10 @@
         },
         "ipython": {
             "hashes": [
-                "sha256:007dcd929c14631f83daff35df0147ea51d1af420da303fd078343878bd5fb62",
-                "sha256:b0f2ef9eada4a68ef63ee10b6dde4f35c840035c50fd24265f8052c98947d5a4"
+                "sha256:47b17ea874454a5c2eacc2732b04a750d260b01ba479323155ac8a39031f5535",
+                "sha256:9fed506c3772c875a3048bc134a25e6f5e997b1569b2636f6a5d891f34cbfd46"
             ],
-            "version": "==6.5.0"
+            "version": "==7.0.1"
         },
         "ipython-genutils": {
             "hashes": [
@@ -114,11 +99,11 @@
         },
         "prompt-toolkit": {
             "hashes": [
-                "sha256:1df952620eccb399c53ebb359cc7d9a8d3a9538cb34c5a1344bdbeb29fbcc381",
-                "sha256:3f473ae040ddaa52b52f97f6b4a493cfa9f5920c255a12dc56a7d34397a398a4",
-                "sha256:858588f1983ca497f1cf4ffde01d978a3ea02b01c8a26a8bbc5cd2e66d816917"
+                "sha256:12e076b21178064b5627f74c4819559c125e31046b55a28d5e024b85fef5617e",
+                "sha256:f2289fe9dd7f27c305421bffe880a543b04cc67660796a2a912595dbcd0d209f",
+                "sha256:ff58ce8bb82c11c43416dd3eec7701dcbe8c576e2d7649f1d2b9d21a2fd93808"
             ],
-            "version": "==1.0.15"
+            "version": "==2.0.4"
         },
         "ptyprocess": {
             "hashes": [
