@@ -133,7 +133,7 @@ class File:
 
     @property
     def filename(self):
-        return os.path.splitext(self.path)[0]
+        return os.path.splitext(os.path.basename(self.path))[0]
 
     @property
     def extension(self):
