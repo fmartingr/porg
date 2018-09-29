@@ -12,6 +12,33 @@ import mutagen
 # Config
 SOURCE_PATH = '/Volumes/MEDIA/Photos'
 TARGET_PATH = '/Volumes/MEDIA/Pictures'
+CUSTOM_MIMETYPES = {
+    # RAW pictures
+    'ARW': 'image/x-sony-arw',
+    'CR2': 'image/x-canon-cr2',
+    'CRW': 'image/x-canon-crw',
+    'DCR': 'image/x-kodak-dcr',
+    'DNG': 'image/x-adobe-dng',
+    'ERF': 'image/x-epson-erf',
+    'K25': 'image/x-kodak-k25',
+    'KDC': 'image/x-kodak-kdc',
+    'MRW': 'image/x-minolta-mrw',
+    'NEF': 'image/x-nikon-nef',
+    'ORF': 'image/x-olympus-orf',
+    'PEF': 'image/x-pentax-pef',
+    'RAF': 'image/x-fuji-raf',
+    'RAW': 'image/x-panasonic-raw',
+    'SR2': 'image/x-sony-sr2',
+    'SRF': 'image/x-sony-srf',
+    'X3F': 'image/x-sigma-x3f',
+    # High Efficiency Image/Video
+    'HEIC': 'image/heic',
+    'HEIF': 'image/heif',
+    'HEVC': 'video/hevc',
+}
+for extension, mimetype in CUSTOM_MIMETYPES.items():
+    mimetypes.add_type(mimetype, f'.{extension}')
+    mimetypes.add_type(mimetype, f'.{extension.lower()}')
 
 # Globals
 file_list = []
