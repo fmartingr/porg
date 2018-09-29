@@ -92,9 +92,12 @@ class File:
         modification date. Make sure your pictures are exported unmodified so the file attributes maintain their
         original values for this to work.
         """
-        if self.is_image:
-            date, time = self.exif['EXIF DateTimeOriginal'].values.split()
-            return datetime(*(int(x) for x in date.split(':') + time.split(':')))
+        if self.is_image and 'png' not in self.path.lower():
+            try:
+                date, time = self.exif['EXIF DateTimeOriginal'].values.split()
+                return datetime(*(int(x) for x in date.split(':') + time.split(':')))
+            except KeyError:
+                pass
 
         if self.is_video:
             # Apple iPhone tag
