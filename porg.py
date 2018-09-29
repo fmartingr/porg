@@ -109,11 +109,11 @@ class File:
         # Tag not found, try to guess datetime from filename
         # Format: YYYY-MM-DD HH.MM.SS.ext
         try:
-            name, _ = os.path.basename(self.path).rsplit('.', maxsplit=1)
+            name, _ = self.filename.rsplit('.', maxsplit=1)
             date, time = name.split(' ')
             return datetime(*(int(x) for x in date.split('-') + time.split('.')))
         except ValueError:
-            raise
+            pass
 
         # Last resort, use file creation/modification date
         stat = os.stat(self.path)
@@ -123,6 +123,14 @@ class File:
             # Linux: No easy way to get creation dates here,
             # so we'll settle for when its content was last modified.
             return datetime.fromtimestamp(stat.st_mtime)
+
+    @property
+    def filename(self):
+        return os.path.splitext(self.path)[0]
+
+    @property
+    def extension(self):
+        return os.path.splitext(self.path)[1][1:].lower()
 
     @property
     def checksum(self) -> Text:
