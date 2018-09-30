@@ -174,5 +174,5 @@ if __name__ == '__main__':
             print(f'---- Error on {fileobj.path} ----')
             raise exc
         new_filename = '.'.join([fileobj.datetime.strftime('%Y-%m-%d_%H-%M-%S'), fileobj.extension])
-        # os.makedirs(target_path, exist_ok=True)
-        # shutil.move(fileobj.path, os.path.join(target_path, new_filename))
+        os.makedirs(target_path, exist_ok=True)
+        shutil.move(fileobj.path, os.path.join(target_path, new_filename))
